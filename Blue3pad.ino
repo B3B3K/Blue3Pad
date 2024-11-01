@@ -69,10 +69,10 @@
     int x = analogRead(joystickPin);
     int aaa = 0;int bbb = 0;int ccc = 0;int ddd = 0;
     
-    if (x > 180 && x < 230)      {Serial.println("1");aaa = 1;bleGamepad.press(BUTTON_1);delay(75);bleGamepad.release(BUTTON_1);} 
-    else if (x > 250 && x < 300) {Serial.println("2");bbb = 1;bleGamepad.press(BUTTON_2);delay(75);bleGamepad.release(BUTTON_2);} 
-    else if (x > 360 && x < 450) {Serial.println("3");ccc = 1;bleGamepad.press(BUTTON_3);delay(75);bleGamepad.release(BUTTON_3);} 
-    else if (x > 600)            {Serial.println("4");ddd = 1;bleGamepad.press(BUTTON_4);delay(75);bleGamepad.release(BUTTON_4);}
+    if (x > 180 && x < 230)      {Serial.println("1");aaa = 1;bleGamepad.press(BUTTON_1);delay(100);bleGamepad.release(BUTTON_1);delay(100);} 
+    else if (x > 250 && x < 300) {Serial.println("2");bbb = 1;bleGamepad.press(BUTTON_2);delay(100);bleGamepad.release(BUTTON_2);delay(100);} 
+    else if (x > 360 && x < 450) {Serial.println("3");ccc = 1;bleGamepad.press(BUTTON_3);delay(100);bleGamepad.release(BUTTON_3);delay(100);} 
+    else if (x > 600)            {Serial.println("4");ddd = 1;bleGamepad.press(BUTTON_4);delay(100);bleGamepad.release(BUTTON_4);delay(100);}
   
     readAccelData();
     int xxx = 1;
