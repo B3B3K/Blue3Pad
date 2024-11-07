@@ -10,7 +10,7 @@
   #define ADXL345_POWER_CTL 0x2D  // Power control register
   #define ADXL345_DATA_FORMAT 0x31  // Data format register
   #define ADXL345_DATAX0 0x32  // X-axis data register
-  #define THRESHOLD 75  // Movement threshold for accelerometer
+  #define THRESHOLD 50  // Movement threshold for accelerometer
   #define X_BUTTON 23         // A
   #define CIRCLE_BUTTON 22    // B
   #define TRIANGLE_BUTTON 21  // Y
@@ -69,16 +69,21 @@
     int x = analogRead(joystickPin);
     int aaa = 0;int bbb = 0;int ccc = 0;int ddd = 0;
     
-    if (x > 180 && x < 230)      {Serial.println("1");aaa = 1;bleGamepad.press(BUTTON_1);delay(100);bleGamepad.release(BUTTON_1);delay(100);} 
-    else if (x > 250 && x < 300) {Serial.println("2");bbb = 1;bleGamepad.press(BUTTON_2);delay(100);bleGamepad.release(BUTTON_2);delay(100);} 
-    else if (x > 360 && x < 450) {Serial.println("3");ccc = 1;bleGamepad.press(BUTTON_3);delay(100);bleGamepad.release(BUTTON_3);delay(100);} 
-    else if (x > 600)            {Serial.println("4");ddd = 1;bleGamepad.press(BUTTON_4);delay(100);bleGamepad.release(BUTTON_4);delay(100);}
+    if (x > 180 && x < 230)      {Serial.println("1");aaa = 1;bleGamepad.press(BUTTON_1);delay(10);} 
+    else if (x > 250 && x < 300) {Serial.println("2");bbb = 1;bleGamepad.press(BUTTON_2);delay(10);} 
+    else if (x > 360 && x < 450) {Serial.println("3");ccc = 1;bleGamepad.press(BUTTON_3);delay(10);} 
+    else if (x > 600)            {Serial.println("4");ddd = 1;bleGamepad.press(BUTTON_4);delay(10);}
+    else if (x < 150)            {bleGamepad.release(BUTTON_1);bleGamepad.release(BUTTON_2);bleGamepad.release(BUTTON_3);bleGamepad.release(BUTTON_4);}
   
     readAccelData();
     int xxx = 1;
     int yyy = 1;
-    if (abs(xAccel) > THRESHOLD) {if (xAccel > 0) {xxx = 2;} else if (xAccel < 0) {xxx = 0;}} else {xxx = 1;}
-    if (abs(yAccel) > THRESHOLD) {if (yAccel > 0) {yyy = 2;} else if (yAccel < 0) {yyy = 0;}} else {yyy = 1;}
+    float roll  = atan2(yG, zG) * 180.0 / PI;
+    float pitch = atan2(-xG, sqrt(yG * yG + zG * zG)) * 180.0 / PI;
+    if (abs(xAccel) > THRESHOLD) {if (xG > 0.30) {xxx = 2;} else if (xAccel < -0.32) {xxx = 0;}} else {xxx = 1;}
+    Serial.println("x:"+String(xG)+","+"y:"+String(yG)+","+"stable:"+String(0)+","+"roll:"+String(roll)+","+"pitch:"+","+String(pitch));
+    
+    if (abs(yAccel) > THRESHOLD) {if (yG > 0.30) {yyy = 2;} else if (yAccel < -0.35) {yyy = 0;}} else {yyy = 1;}
     /*
     if (aaa == 1){bleGamepad.press(X_BUTTON);}
     if (bbb == 1){bleGamepad.press(CIRCLE_BUTTON);}
